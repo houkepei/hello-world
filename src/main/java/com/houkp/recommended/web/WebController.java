@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,7 +20,7 @@ public class WebController {
     @Autowired
     private WebService webService;
 
-    @RequestMapping(value =  "/orderList")
+    @GetMapping(value =  "/orderList")
     @ResponseBody
     public Page<Order> orderList(Pageable pageable){
         Page<Order> orders = webService.search(pageable);
@@ -27,7 +28,7 @@ public class WebController {
             return orders;
     }
 
-    @RequestMapping(value = "/hello")
+    @GetMapping(value = "/hello")
     @ResponseBody
     public String  hello(){
 
