@@ -5,14 +5,16 @@
     https://www.mkyong.com/logging/logback-xml-example/
     -->
     <!--<include resource="org/springframework/boot/logging/logback/base.xml"/>-->
+    <!--设置系统日志目录-->
 
     <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--记录阈值-->
         <!--<threshold>info</threshold>-->
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${application.name:-houkp}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 正在记录的日志文件的路径及文件名 -->
+            <fileNamePattern>log/${application.name:-houkp}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- each file should be at most 100MB, keep 31 days worth of history, but at most 30GB -->
-            <maxFileSize>100MB</maxFileSize>
+            <maxFileSize>1MB</maxFileSize>
             <!-- 日志文件保留天数 -->
             <maxHistory>31</maxHistory>
             <totalSizeCap>30GB</totalSizeCap>
@@ -29,10 +31,12 @@
     </appender>
 
     <logger name="com.houkp.recommended" level="DEBUG" />
-    <!--<logger name="com.bonc.icrm.framework.operator.log" level="INFO" />-->
     <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="org.hibernate" level="INFO"/>
+    <logger name="org.springframework.orm.jpa" level="INFO"/>
 
-    <root level="ERROR">
+
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ROLLING_FILE"/>
     </root>

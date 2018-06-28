@@ -26,6 +26,7 @@ spring:
     properties:
       hibernate:
        format_sql: true
+
   http:
     encoding:
       charset: UTF-8
