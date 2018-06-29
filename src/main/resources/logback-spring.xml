@@ -32,11 +32,22 @@
 
     <logger name="com.houkp.recommended" level="DEBUG" />
     <logger name="org.springframework.web" level="DEBUG"/>
-    <logger name="org.hibernate" level="INFO"/>
-    <logger name="org.springframework.orm.jpa" level="INFO"/>
+    <logger name="org.springframework.context" level="WARN"/>
+    <logger name="org.springframework.beans" level="WARN"/>
+
+    <logger name="com.alibaba.druid" level="INFO" />
+    <logger name="com.alibaba.fastjson" level="WARN" />
+
+    <logger name="org.apache.http" level="debug"/>
+    <logger name="org.hibernate.SQL" level="DEBUG" />
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="TRACE" />-->
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="DEBUG" />-->
+    <!--<logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />-->
+    <!--<logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />-->
 
 
-    <root level="DEBUG">
+
+    <root level="Error">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ROLLING_FILE"/>
     </root>
