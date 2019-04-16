@@ -9,6 +9,7 @@ import com.houkp.recommended.bean.adview.response.SeatBid;
 import com.houkp.recommended.config.RequestLimit;
 import com.houkp.recommended.entity.Order;
 import com.houkp.recommended.service.WebService;
+import com.houkp.recommended.utils.MD5Util;
 import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,10 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.security.provider.MD5;
 
 import javax.annotation.Resource;
-import java.io.File;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -37,8 +39,6 @@ public class WebController {
     private WebService webService;
 
 
-
-
 //    @Resource
 //    private RedisTemplate<String, Object> redisTemplate;
 
@@ -51,6 +51,7 @@ public class WebController {
 
     /**
      * 上传ip黑名单
+     *
      * @param file
      * @param startDate
      * @param endDate
@@ -58,13 +59,23 @@ public class WebController {
      */
     @PostMapping(value = "/blackListIp")
     @ResponseBody
-    public String blackListIp(@RequestParam MultipartFile file, @RequestParam String startDate, @RequestParam  String endDate) {
+    public String blackListIp(@RequestParam MultipartFile file, @RequestParam String startDate, @RequestParam String endDate) {
 
-        file.getName();
-        System.out.println(  file.getSize());
-        System.out.println(  file.getName());
-        System.out.println(startDate);
-        System.out.println(endDate);
+        Set set=new HashSet();
+        try {
+            InputStream inputStream = file.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                set.add(line);
+            }
+            log.debug("此次更新blacklist_ip的条数：{}",set.size());
+            webService.updateBlacklistIp(set,startDate,endDate);
+        } catch (Exception e) {
+            log.error("异常：{}",e);
+
+        }
         return "ok";
     }
 
@@ -120,7 +131,7 @@ public class WebController {
 //        return o.toString();
 //    }
 
-    @RequestLimit(count = 1,time = 120000)
+    @RequestLimit(count = 1, time = 120000)
     @GetMapping(value = "/hello")
     @ResponseBody
     public String hello() {

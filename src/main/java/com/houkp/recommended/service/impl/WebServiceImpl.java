@@ -8,6 +8,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 
 @Service
 public class WebServiceImpl implements WebService {
@@ -19,5 +24,13 @@ public class WebServiceImpl implements WebService {
     public Page<Order> search(Pageable pageable) {
 
         return orderRepository.findAll(pageable);
+    }
+
+    @Override
+    public String updateBlacklistIp(Set set, String startDate, String endDate) {
+        List list = new ArrayList(set);
+        System.out.println(list.size());
+        orderRepository.save(list);
+        return null;
     }
 }

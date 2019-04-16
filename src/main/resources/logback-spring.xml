@@ -26,7 +26,7 @@
     </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.classic.PatternLayout">
-            <Pattern>%d{HH:mm:ss:SSS} [${application.name:-houkp}] [%X{client_address}] [%X{request_id}] [%X{access_username}] [%thread] %-5level %logger{36}.%M-%L - %msg%n</Pattern>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}  [${application.name:-houkp}] [%X{client_address}] [%X{request_id}] [%X{access_username}] [%thread] %-5level %logger{36}.%M-%L - %msg%n</Pattern>
         </layout>
     </appender>
 
