@@ -23,7 +23,7 @@ public class DemoThreadTest {
   }
     @Test
     public void fruits(){
-        Fruits f = FruitsFactory.getFruits("apple");
+        Fruits f = FruitsFactory.getFruits("com.houkp.recommended.service.impl.Apple");
         f.eat();
     }
 

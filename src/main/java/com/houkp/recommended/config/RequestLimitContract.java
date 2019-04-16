@@ -18,6 +18,7 @@ import java.util.TimerTask;
 @Component
 public class RequestLimitContract {
     private static final Logger logger = (Logger) LoggerFactory.getLogger("RequestLimitLogger");
+
     private Map<String, Integer> redisTemplate = new HashMap<String, Integer>();
 
     @Value("${msf.time}")

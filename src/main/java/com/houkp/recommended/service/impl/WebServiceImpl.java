@@ -14,8 +14,10 @@ public class WebServiceImpl implements WebService {
 
     @Autowired
     private OrderRepository orderRepository;
+
     @Override
     public Page<Order> search(Pageable pageable) {
+
         return orderRepository.findAll(pageable);
     }
 }
