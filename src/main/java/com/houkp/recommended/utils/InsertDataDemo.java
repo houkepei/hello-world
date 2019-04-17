@@ -57,7 +57,7 @@ public class InsertDataDemo {
             for (Object o : list) {
 
             }
-            for (int i = 1; i <= ; i+=100000) {
+            for (int i = 1; i <=list.size() ; i+=100000) {
                 preparedStatement.setString(1, String.valueOf(i));
                 preparedStatement.setInt(2, 1);
                 preparedStatement.setDate(3, date);
@@ -85,8 +85,10 @@ public class InsertDataDemo {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-        initConn();
-        insert(1000000);
+//        initConn();
+
+        Date date =Date.valueOf("2019-04-17");
+        System.out.println(date);
 
     }
 }
