@@ -1,9 +1,10 @@
 package com.houkp.recommended.utils;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class InsertDataDemo {
     static Connection conn = null;
@@ -38,42 +39,47 @@ public class InsertDataDemo {
     }
 
 
-    public static void insert(int insertNum) {
+    public static void insert(Set set, String startDate, String endDate) {
+        List list = new ArrayList(set);
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.valueOf(localDate);
         // 开时时间
         Long begin = System.currentTimeMillis();
         System.out.println("开始插入数据...");
         // sql前缀
-        String prefix = "INSERT INTO tb_data (id, user_name, create_time, random) VALUES ";
+        final String strSql = "insert into  blacklist_ip (ip_blacklist, flag, end_time,  start_time, version) values (?, ?, ?, ?, ?)";
 
         try {
-            // 保存sql后缀
-            StringBuffer suffix = new StringBuffer();
             // 设置事务为非自动提交
-            conn.setAutoCommit(false);
-            PreparedStatement pst = conn.prepareStatement("");
-            for (int i = 1; i <= insertNum; i++) {
-                // 构建sql后缀
-                suffix.append("(" + i +",'"+ randomStr(8)  + "', SYSDATE(), " + i * Math.random() + "),");
+//            conn.setAutoCommit(false);
+            //预编译sql
+            PreparedStatement preparedStatement = conn.prepareStatement(strSql);
+            for (Object o : list) {
+
             }
-            // 构建完整sql
-            String sql = prefix + suffix.substring(0, suffix.length() - 1);
-            // 添加执行sql
-            pst.addBatch(sql);
+            for (int i = 1; i <= ; i+=100000) {
+                preparedStatement.setString(1, String.valueOf(i));
+                preparedStatement.setInt(2, 1);
+                preparedStatement.setDate(3, date);
+                preparedStatement.setDate(4,  date);
+                preparedStatement.setString(5, String.valueOf(i));
+                preparedStatement.addBatch();
+            }
+
             // 执行操作
-            pst.executeBatch();
+            preparedStatement.executeBatch();
             // 提交事务
-            conn.commit();
+//            conn.commit();
 
             // 关闭连接
-            pst.close();
+            preparedStatement.close();
             conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         // 结束时间
         Long end = System.currentTimeMillis();
-        System.out.println("插入"+insertNum+"条数据数据完成！");
-        System.out.println("耗时 : " + (end - begin) / 1000 + " 秒");
+        System.out.println("成功插入10W条数据耗时: " + (end - begin) / 1000 + " 秒");
     }
 
 
