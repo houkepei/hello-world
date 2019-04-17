@@ -30,6 +30,7 @@ public class WebServiceImpl implements WebService {
     public String updateBlacklistIp(Set set, String startDate, String endDate) {
         List list = new ArrayList(set);
         System.out.println(list.size());
+
         orderRepository.save(list);
         return null;
     }
