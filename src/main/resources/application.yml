@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useUnicode=true&useSSL=false
+    url: jdbc:mysql://rm-2zer1w1qt6k5nr163.mysql.rds.aliyuncs.com:3306/test?zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8&useUnicode=true&useSSL=false
 #    url: jdbc:oracle:thin:@133.160.94.44:1521:premdb
-    username: root
-    password: 1234
+    username: smdspcindb
+    password: m4ds#%@$WWS
     druid:
       initial-size: 3
       max-active: 6

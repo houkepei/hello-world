@@ -25,9 +25,10 @@ public class InsertDataDemo {
     }
 
 
-
-
     public static void insert(Set set, String startDate, String endDate) {
+        // 开时时间
+        Long begin = System.currentTimeMillis();
+        Integer setNum = set.size();
         try {
             initConn();
         } catch (ClassNotFoundException e) {
@@ -35,12 +36,12 @@ public class InsertDataDemo {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         List list = new ArrayList(set);
         LocalDate localDate = LocalDate.now();
         Date sDate = Date.valueOf(startDate);
         Date eDate = Date.valueOf(endDate);
-        // 开时时间
-        Long begin = System.currentTimeMillis();
+
         System.out.println("开始插入数据...");
         // sql前缀
         final String strSql = "insert into  blacklist_ip (ip_blacklist, flag, end_time,  start_time, version) values (?, ?, ?, ?, ?)";
@@ -51,15 +52,25 @@ public class InsertDataDemo {
             //预编译sql
             PreparedStatement preparedStatement = conn.prepareStatement(strSql);
 
-            for (int i = 0; i <list.size() ; i++) {
+            for (int i = 0; i < list.size(); i++) {
                 preparedStatement.setString(1, String.valueOf(list.get(i)));
                 preparedStatement.setInt(2, 1);
                 preparedStatement.setDate(3, eDate);
-                preparedStatement.setDate(4,  sDate);
+                preparedStatement.setDate(4, sDate);
                 preparedStatement.setString(5, localDate.toString());
                 preparedStatement.addBatch();
-            }
+                //每10w条数据插入一次
+                if (i % 10000 == 0) {
+                    // 执行操作
+                    preparedStatement.executeBatch();
+                    // 提交事务
+                    conn.commit();
+                    // 结束时间
+                    Long end = System.currentTimeMillis();
+                    System.out.println("成功插入10W条数据耗时: " + (end - begin) / 1000 + " 秒");
+                }
 
+            }
             // 执行操作
             preparedStatement.executeBatch();
             // 提交事务
@@ -71,18 +82,23 @@ public class InsertDataDemo {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
         // 结束时间
         Long end = System.currentTimeMillis();
-        System.out.println("成功插入10W条数据耗时: " + (end - begin) / 1000 + " 秒");
+        System.out.println("成功插入" + set.size() + "条数据耗时: " + (end - begin) / 1000 + " 秒");
+
     }
 
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
-//        initConn();
+        for (int j = 0; j < 100; j++) {
+            if (j % 10 == 0) {
+                System.out.println(j);
+            }
+        }
 
-        Date date =Date.valueOf("2019-04-17");
-        System.out.println(date);
 
     }
 }
