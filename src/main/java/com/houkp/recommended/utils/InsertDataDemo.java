@@ -11,14 +11,15 @@ public class InsertDataDemo {
 
     public static void initConn() throws ClassNotFoundException, SQLException {
 
-        String url = "jdbc:mysql://localhost:3306/test?"
-                + "user=root&password=1234&useUnicode=true&characterEncoding=UTF8&useSSL=false&serverTimezone=UTC";
+        String url = "jdbc:mysql://rm-2zer1w1qt6k5nr163.mysql.rds.aliyuncs.com:3306/digitalunion?useUnicode=true&amp;characterEncoding=utf8";
+        String user = "smdspcindb";
+        String password = "m4ds#%@$WWS";
 
         try {
             // 动态加载mysql驱动
             Class.forName("com.mysql.jdbc.Driver");
             System.out.println("成功加载MySQL驱动程序");
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url,user,password);
         } catch (Exception e) {
             e.printStackTrace();
         }
