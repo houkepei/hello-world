@@ -25,24 +25,20 @@ public class InsertDataDemo {
     }
 
 
-    public static String randomStr(int size) {
-        //定义一个空字符串
-        String result = "";
-        for (int i = 0; i < size; ++i) {
-            //生成一个97~122之间的int类型整数
-            int intVal = (int) (Math.random() * 26 + 97);
-            //强制转换（char）intVal 将对应的数值转换为对应的字符，并将字符进行拼接
-            result = result + (char) intVal;
-        }
-        //输出字符串
-        return result;
-    }
 
 
     public static void insert(Set set, String startDate, String endDate) {
+        try {
+            initConn();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         List list = new ArrayList(set);
         LocalDate localDate = LocalDate.now();
-        Date date = Date.valueOf(localDate);
+        Date sDate = Date.valueOf(startDate);
+        Date eDate = Date.valueOf(endDate);
         // 开时时间
         Long begin = System.currentTimeMillis();
         System.out.println("开始插入数据...");
@@ -51,25 +47,23 @@ public class InsertDataDemo {
 
         try {
             // 设置事务为非自动提交
-//            conn.setAutoCommit(false);
+            conn.setAutoCommit(false);
             //预编译sql
             PreparedStatement preparedStatement = conn.prepareStatement(strSql);
-            for (Object o : list) {
 
-            }
-            for (int i = 1; i <=list.size() ; i+=100000) {
-                preparedStatement.setString(1, String.valueOf(i));
+            for (int i = 0; i <list.size() ; i++) {
+                preparedStatement.setString(1, String.valueOf(list.get(i)));
                 preparedStatement.setInt(2, 1);
-                preparedStatement.setDate(3, date);
-                preparedStatement.setDate(4,  date);
-                preparedStatement.setString(5, String.valueOf(i));
+                preparedStatement.setDate(3, eDate);
+                preparedStatement.setDate(4,  sDate);
+                preparedStatement.setString(5, localDate.toString());
                 preparedStatement.addBatch();
             }
 
             // 执行操作
             preparedStatement.executeBatch();
             // 提交事务
-//            conn.commit();
+            conn.commit();
 
             // 关闭连接
             preparedStatement.close();
