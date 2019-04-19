@@ -11,6 +11,8 @@ import com.houkp.recommended.entity.Order;
 import com.houkp.recommended.service.WebService;
 import com.houkp.recommended.utils.MD5Util;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.SwaggerDefinition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +61,7 @@ public class WebController {
      */
     @PostMapping(value = "/blackListIp")
     @ResponseBody
-    public String blackListIp(@RequestParam MultipartFile file, @RequestParam String startDate, @RequestParam String endDate) {
+    public String blackListIp(@RequestParam MultipartFile file, @RequestParam  @ApiParam(value="例如:2019-04-15",required=true)  String startDate, @RequestParam String endDate) {
 
         Set set=new HashSet();
         try {
