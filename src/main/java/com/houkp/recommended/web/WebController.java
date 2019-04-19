@@ -61,7 +61,7 @@ public class WebController {
      */
     @PostMapping(value = "/blackListIp")
     @ResponseBody
-    public String blackListIp(@RequestParam MultipartFile file, @RequestParam  @ApiParam(value="例如:2019-04-15",required=true)  String startDate, @RequestParam String endDate) {
+    public String blackListIp(@RequestParam @ApiParam(value="上传ip黑名单",required=true) MultipartFile file, @RequestParam  @ApiParam(value="例如:2019-04-15",required=true)  String startDate, @RequestParam String endDate) {
 
         Set set=new HashSet();
         try {
