@@ -17,5 +17,12 @@ public interface WebService {
      */
     public Page<Order>  search(Pageable pageable);
 
+    /**
+     * 添加ip黑名单数据
+     * @param set
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     public String  updateBlacklistIp(Set set, String startDate, String endDate);
 }

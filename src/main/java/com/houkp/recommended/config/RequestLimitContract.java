@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * 访问次数限制
+ */
 @Aspect
 @Component
 public class RequestLimitContract {
