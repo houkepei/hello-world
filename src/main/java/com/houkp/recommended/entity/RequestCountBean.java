@@ -29,4 +29,9 @@ public class RequestCountBean {
     private String appName;//App名称
     private String appPackageName;//App包名
     private String requestCount;//请求次数
+
+
+    private String day;//天
+    private Integer hour;//小时
+    private Integer minute;//分钟
 }

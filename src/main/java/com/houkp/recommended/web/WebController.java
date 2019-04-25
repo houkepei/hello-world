@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.*;
 
 
@@ -78,6 +80,7 @@ public class WebController {
     @PostMapping(value = "/postBid")
     @ResponseBody
     public String postBid(@RequestBody String bidCount) {
+        List<BidCountBean> list =new ArrayList<>();
         String[] split = bidCount.replace("{", "").replace("}", "").split(",");
         for (String s : split) {
             String[] strings = s.split(":");
@@ -103,11 +106,12 @@ public class WebController {
             bidCountBean.setAdxId(bidCountBeansplit[1]);
             bidCountBean.setAppName(bidCountBeansplit[2]);
             bidCountBean.setAppPackageName(bidCountBeansplit[3]);
-            System.out.println(bidCountBean);
-            webService.saveBidCount(bidCountBean);
-
+            bidCountBean.setDay(LocalDate.now().toString());
+            bidCountBean.setHour(LocalTime.now().getHour());
+            bidCountBean.setMinute(LocalTime.now().getMinute());
+            list.add(bidCountBean);
         }
-
+        webService.saveBidCountList(list);
         return null;
     }
 
@@ -121,6 +125,7 @@ public class WebController {
     @ResponseBody
     public String postRequest(@RequestBody String requestCount) {
         String[] split = requestCount.replace("{", "").replace("}", "").split(",");
+        List<RequestCountBean> list =new ArrayList();
         for (String s : split) {
             String[] strings = s.split(":");
             RequestCountBean requestCountBean = new RequestCountBean();
@@ -145,10 +150,13 @@ public class WebController {
             requestCountBean.setAdxId(bidCountBeansplit[1]);
             requestCountBean.setAppName(bidCountBeansplit[2]);
             requestCountBean.setAppPackageName(bidCountBeansplit[3]);
-            System.out.println(requestCountBean);
-            webService.saveRequestCount(requestCountBean);
-
+            requestCountBean.setDay(LocalDate.now().toString());
+            requestCountBean.setHour(LocalTime.now().getHour());
+            requestCountBean.setMinute(LocalTime.now().getMinute());
+            list.add(requestCountBean);
         }
+        webService.saveRequestCountList(list);
+
         return null;
     }
 

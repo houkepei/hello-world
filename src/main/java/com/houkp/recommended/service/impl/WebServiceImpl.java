@@ -94,4 +94,16 @@ public class WebServiceImpl implements WebService {
         requestCountRepository.save(requestCountBean);
         return null;
     }
+
+    @Override
+    public String saveBidCountList(List<BidCountBean> bidCountBeans) {
+        bidCountRepository.save(bidCountBeans);
+        return null;
+    }
+
+    @Override
+    public String saveRequestCountList(List<RequestCountBean> requestCountBeans) {
+        requestCountRepository.save(requestCountBeans);
+        return null;
+    }
 }

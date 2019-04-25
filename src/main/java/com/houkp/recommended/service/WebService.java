@@ -6,6 +6,7 @@ import com.houkp.recommended.entity.RequestCountBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,6 +41,20 @@ public interface WebService {
      */
     public String  saveRequestCount(RequestCountBean requestCountBean);
 
+
+    /**
+     * 保存出手数
+     * @param bidCountBeans
+     * @return
+     */
+    public String  saveBidCountList(List<BidCountBean> bidCountBeans);
+
+    /**
+     * 保存流量数
+     * @param requestCountBeans
+     * @return
+     */
+    public String  saveRequestCountList(List<RequestCountBean> requestCountBeans);
 
 
 
