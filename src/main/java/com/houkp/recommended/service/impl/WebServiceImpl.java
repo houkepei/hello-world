@@ -1,11 +1,16 @@
 package com.houkp.recommended.service.impl;
 
+import com.houkp.recommended.entity.BidCountBean;
 import com.houkp.recommended.entity.BlacklistIp;
 import com.houkp.recommended.entity.Order;
+import com.houkp.recommended.entity.RequestCountBean;
+import com.houkp.recommended.repository.BidCountRepository;
 import com.houkp.recommended.repository.BlacklistIpRepository;
 import com.houkp.recommended.repository.OrderRepository;
+import com.houkp.recommended.repository.RequestCountRepository;
 import com.houkp.recommended.service.WebService;
 import com.houkp.recommended.utils.InsertDataDemo;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +34,12 @@ public class WebServiceImpl implements WebService {
     private JdbcTemplate jdbcTemplate;
     @Autowired
     private BlacklistIpRepository blacklistIpRepository;
+
+    @Autowired
+    private BidCountRepository bidCountRepository;
+
+    @Autowired
+    private RequestCountRepository requestCountRepository;
 
     @Override
     public Page<Order> search(Pageable pageable) {
@@ -70,5 +81,17 @@ public class WebServiceImpl implements WebService {
 //        }
         System.out.println(set.size());
         return String.valueOf(set.size());
+    }
+
+    @Override
+    public String saveBidCount(BidCountBean bidCountBean) {
+        bidCountRepository.save(bidCountBean);
+        return null;
+    }
+
+    @Override
+    public String saveRequestCount(RequestCountBean requestCountBean) {
+        requestCountRepository.save(requestCountBean);
+        return null;
     }
 }

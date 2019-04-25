@@ -1,7 +1,10 @@
 package com.houkp.recommended.web;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.houkp.recommended.config.RequestLimit;
 import com.houkp.recommended.entity.BidCountBean;
+import com.houkp.recommended.entity.RequestCountBean;
 import com.houkp.recommended.service.WebService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -26,16 +29,6 @@ public class WebController {
     @Autowired
     private WebService webService;
 
-
-//    @Resource
-//    private RedisTemplate<String, Object> redisTemplate;
-
-//    @GetMapping(value = "/orderList")
-//    @ResponseBody
-//    public Page<Order> orderList(Pageable pageable) {
-//        Page<Order> orders = webService.search(pageable);
-//        return orders;
-//    }
 
     /**
      * 上传ip黑名单
@@ -78,25 +71,84 @@ public class WebController {
 
     /**
      * 接收每台服务出手统计次数
-     * @param bidCountBean
+     *
+     * @param bidCount
      * @return
      */
     @PostMapping(value = "/postBid")
     @ResponseBody
-    public String postBid(@RequestBody String bidCountBean) {
-        System.out.println(bidCountBean);
+    public String postBid(@RequestBody String bidCount) {
+        String[] split = bidCount.replace("{", "").replace("}", "").split(",");
+        for (String s : split) {
+            String[] strings = s.split(":");
+            BidCountBean bidCountBean = new BidCountBean();
+            bidCountBean.setBidCount(strings[1]);
+            String replace = strings[0].replace("\"", "");
+            String[] bidCountBeansplit = replace.split("\\$");
+            String adxName = bidCountBeansplit[1];
+            if (adxName.equals("1")) {
+                bidCountBean.setAdxName("灵集");
+            } else if (adxName.equals("2")) {
+                bidCountBean.setAdxName("快友");
+            } else if (adxName.equals("3")) {
+                bidCountBean.setAdxName("悠易");
+            } else if (adxName.equals("4")) {
+                bidCountBean.setAdxName("腾讯广点通");
+            } else if (adxName.equals("5")) {
+                bidCountBean.setAdxName("百度");
+            } else {
+                continue;
+            }
+            bidCountBean.setHostAddress(bidCountBeansplit[0]);
+            bidCountBean.setAdxId(bidCountBeansplit[1]);
+            bidCountBean.setAppName(bidCountBeansplit[2]);
+            bidCountBean.setAppPackageName(bidCountBeansplit[3]);
+            System.out.println(bidCountBean);
+            webService.saveBidCount(bidCountBean);
+
+        }
+
         return null;
     }
 
     /**
      * 接收每台服务统计次数
-     * @param requestCountBean
+     *
+     * @param requestCount
      * @return
      */
     @PostMapping(value = "/postRequest")
     @ResponseBody
-    public String postRequest(@RequestBody String requestCountBean) {
-        System.out.println(requestCountBean);
+    public String postRequest(@RequestBody String requestCount) {
+        String[] split = requestCount.replace("{", "").replace("}", "").split(",");
+        for (String s : split) {
+            String[] strings = s.split(":");
+            RequestCountBean requestCountBean = new RequestCountBean();
+            requestCountBean.setRequestCount(strings[1]);
+            String replace = strings[0].replace("\"", "");
+            String[] bidCountBeansplit = replace.split("\\$");
+            String adxName = bidCountBeansplit[1];
+            if (adxName.equals("1")) {
+                requestCountBean.setAdxName("灵集");
+            } else if (adxName.equals("2")) {
+                requestCountBean.setAdxName("快友");
+            } else if (adxName.equals("3")) {
+                requestCountBean.setAdxName("悠易");
+            } else if (adxName.equals("4")) {
+                requestCountBean.setAdxName("腾讯广点通");
+            } else if (adxName.equals("5")) {
+                requestCountBean.setAdxName("百度");
+            } else {
+                continue;
+            }
+            requestCountBean.setHostAddress(bidCountBeansplit[0]);
+            requestCountBean.setAdxId(bidCountBeansplit[1]);
+            requestCountBean.setAppName(bidCountBeansplit[2]);
+            requestCountBean.setAppPackageName(bidCountBeansplit[3]);
+            System.out.println(requestCountBean);
+            webService.saveRequestCount(requestCountBean);
+
+        }
         return null;
     }
 
