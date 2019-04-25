@@ -104,8 +104,8 @@ public class WebController {
             }
             bidCountBean.setHostAddress(bidCountBeansplit[0]);
             bidCountBean.setAdxId(bidCountBeansplit[1]);
-            bidCountBean.setAppName(bidCountBeansplit[2]);
-            bidCountBean.setAppPackageName(bidCountBeansplit[3]);
+//            bidCountBean.setAppName(bidCountBeansplit[2]);
+//            bidCountBean.setAppPackageName(bidCountBeansplit[3]);
             bidCountBean.setDay(LocalDate.now().toString());
             bidCountBean.setHour(LocalTime.now().getHour());
             bidCountBean.setMinute(LocalTime.now().getMinute());
@@ -148,8 +148,8 @@ public class WebController {
             }
             requestCountBean.setHostAddress(bidCountBeansplit[0]);
             requestCountBean.setAdxId(bidCountBeansplit[1]);
-            requestCountBean.setAppName(bidCountBeansplit[2]);
-            requestCountBean.setAppPackageName(bidCountBeansplit[3]);
+//            requestCountBean.setAppName(bidCountBeansplit[2]);
+//            requestCountBean.setAppPackageName(bidCountBeansplit[3]);
             requestCountBean.setDay(LocalDate.now().toString());
             requestCountBean.setHour(LocalTime.now().getHour());
             requestCountBean.setMinute(LocalTime.now().getMinute());
