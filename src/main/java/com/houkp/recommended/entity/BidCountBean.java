@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "bid_count")
 @ApiModel(value="出手表")
-public class BidRequestBean {
+public class BidCountBean {
     /**
      * 使用UUID做主键， 适配所有数据库
      */
@@ -21,6 +21,11 @@ public class BidRequestBean {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id;
-    private String username;
-    private int age;
+
+    private String hostAddress;//服务器ip
+    private String adxId;//adx 编号
+    private String adxName;//adx 名称
+    private String appName;//App名称
+    private String appPackageName;//App包名
+    private String bidCount;//出手次数
 }

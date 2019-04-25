@@ -1,7 +1,7 @@
 package com.houkp.recommended.web;
 
 import com.houkp.recommended.config.RequestLimit;
-import com.houkp.recommended.entity.BidRequestBean;
+import com.houkp.recommended.entity.BidCountBean;
 import com.houkp.recommended.service.WebService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -76,11 +76,27 @@ public class WebController {
         return "ok";
     }
 
-
-    @PostMapping(value = "/post")
+    /**
+     * 接收每台服务出手统计次数
+     * @param bidCountBean
+     * @return
+     */
+    @PostMapping(value = "/postBid")
     @ResponseBody
-    public String postBid(@RequestBody BidRequestBean bidRequestBean) {
+    public String postBid(@RequestBody String bidCountBean) {
+        System.out.println(bidCountBean);
+        return null;
+    }
 
+    /**
+     * 接收每台服务统计次数
+     * @param requestCountBean
+     * @return
+     */
+    @PostMapping(value = "/postRequest")
+    @ResponseBody
+    public String postRequest(@RequestBody String requestCountBean) {
+        System.out.println(requestCountBean);
         return null;
     }
 
