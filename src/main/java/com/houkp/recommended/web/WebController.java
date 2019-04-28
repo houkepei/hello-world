@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,7 +24,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 
-@Api(value = "WebController", description = "推荐中心")
+@Api(value = "WebController", description = "监控平台")
 @Controller
 public class WebController {
 
@@ -80,7 +82,7 @@ public class WebController {
     @PostMapping(value = "/postBid")
     @ResponseBody
     public String postBid(@RequestBody String bidCount) {
-        List<BidCountBean> list =new ArrayList<>();
+        List<BidCountBean> list = new ArrayList<>();
         String[] split = bidCount.replace("{", "").replace("}", "").split(",");
         for (String s : split) {
             String[] strings = s.split(":");
@@ -125,7 +127,7 @@ public class WebController {
     @ResponseBody
     public String postRequest(@RequestBody String requestCount) {
         String[] split = requestCount.replace("{", "").replace("}", "").split(",");
-        List<RequestCountBean> list =new ArrayList();
+        List<RequestCountBean> list = new ArrayList();
         for (String s : split) {
             String[] strings = s.split(":");
             RequestCountBean requestCountBean = new RequestCountBean();
@@ -167,4 +169,17 @@ public class WebController {
         System.out.println("11111111111111111111111111");
         return "hello word";
     }
+
+    /**
+     * 查询请求
+     * @param pageable
+     * @return
+     */
+    @GetMapping(value = "/requestCountList")
+    @ResponseBody
+    public Page<RequestCountBean> orderList(Pageable pageable) {
+        Page<RequestCountBean> requestCountBeanPage = webService.search(pageable);
+        return requestCountBeanPage;
+    }
+
 }

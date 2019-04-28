@@ -16,7 +16,7 @@ public interface WebService {
      * @param pageable
      * @return
      */
-    public Page<Order>  search(Pageable pageable);
+    public Page<RequestCountBean>  search(Pageable pageable);
 
     /**
      * 添加ip黑名单数据

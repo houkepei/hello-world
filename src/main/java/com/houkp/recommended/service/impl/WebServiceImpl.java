@@ -42,9 +42,9 @@ public class WebServiceImpl implements WebService {
     private RequestCountRepository requestCountRepository;
 
     @Override
-    public Page<Order> search(Pageable pageable) {
+    public Page<RequestCountBean> search(Pageable pageable) {
 
-        return orderRepository.findAll(pageable);
+        return requestCountRepository.findAll(pageable);
     }
 
     @Override
