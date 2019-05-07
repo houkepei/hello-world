@@ -163,7 +163,7 @@ public class WebController {
         return null;
     }
 
-//    @RequestLimit(count = 1, time = 120000)
+    //    @RequestLimit(count = 1, time = 120000)
     @GetMapping("/hello")
 //    @ResponseBody
     public ModelAndView hello() {
@@ -173,6 +173,7 @@ public class WebController {
 
     /**
      * 页面展示数据
+     *
      * @return
      */
     @GetMapping("/echatrts")
@@ -181,9 +182,9 @@ public class WebController {
     }
 
 
-
     /**
      * 查询请求
+     *
      * @param pageable
      * @return
      */
@@ -196,24 +197,73 @@ public class WebController {
 
     /**
      * 查询请求数
-     * @param 
+     *
+     * @param
      * @return
      */
     @GetMapping(value = "/queryRequestCount")
     @ResponseBody
     public String queryRequestCount() {
+        //页面json数据
+        Map echarts = new HashMap();
+        //legend 标题
+        List adxNameList = new ArrayList();
+        //数据
+        List series = new ArrayList();
         //当前日期
         String now = LocalDate.now().toString();
         //当前小时
         int hour = LocalTime.now().getHour();
-        List requestCountBeanList = webService.queryRequestCount(now,hour);
+        List requestCountBeanList = webService.queryRequestCount(now, hour);
         for (Object o : requestCountBeanList) {
             RequestCountDTO requestCountDTO = RequestCountDTO.convertRequestCount(JSON.toJSONString(o));
-            System.out.println(requestCountDTO);
-
+            String adxName = requestCountDTO.getHostAddress() + requestCountDTO.getAdxName();
+            adxNameList.add(adxName);
+            Map seriesMap = new HashMap();
+            seriesMap.put("name", adxName);
+            seriesMap.put("type", "line");
+            seriesMap.put("stack", "总量");
+            seriesMap.put("data", requestCountDTO.getRequestCount());
+            series.add(seriesMap);
         }
+        echarts.put("legend", adxNameList);
+        echarts.put("series", series);
+        System.out.println(JSON.toJSONString(echarts));
+        return JSON.toJSONString(echarts);
+    }
 
-        return JSON.toJSONString(requestCountBeanList);
+    public static void main(String[] args) {
+        Map echarts = new HashMap();
+        List adxNameList = new ArrayList();
+        adxNameList.add("快友");
+        adxNameList.add("快友");
+        adxNameList.add("快友");
+        adxNameList.add("快友");
+        adxNameList.add("快友");
+        adxNameList.add("快友");
+        echarts.put("legend", adxNameList);
+
+        String string = JSON.toJSONString(echarts);
+        List series = new ArrayList();
+        for (int i = 0; i < 10; i++) {
+            Map seriesMap = new HashMap();
+            seriesMap.put("name1", "邮件营销");
+            seriesMap.put("name2", "邮件营销");
+            seriesMap.put("name3", "邮件营销");
+            List data = new ArrayList();
+            data.add("222");
+            data.add("222");
+            data.add("222");
+            data.add("222");
+            data.add("222");
+            data.add("222");
+            seriesMap.put("data", data);
+            series.add(seriesMap);
+        }
+        echarts.put("series", series);
+
+        System.out.println(string);
+        System.out.println(JSON.toJSONString(echarts));
     }
 
 }

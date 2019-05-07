@@ -168,14 +168,11 @@
 
     setInterval(function () {
         $.ajax({
-            url: 'http://localhost:8090/requestCountList',
+            url: 'http://localhost:8090/queryRequestCount',
             type: "GET",
             // data:{name:'xx'}, //要给后台传的参数
             success: function (res) {
-                if (res.size == '20') {
-
                     myChart(res)
-                }
             }
         })
     }, 10000)
