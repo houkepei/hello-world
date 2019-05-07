@@ -11,6 +11,11 @@ import java.util.Set;
 
 
 public interface WebService {
+
+
+
+
+
     /**
      * 查询所有数据
      * @param pageable
@@ -56,7 +61,11 @@ public interface WebService {
      */
     public String  saveRequestCountList(List<RequestCountBean> requestCountBeans);
 
-
-
-
+    /**
+     * 根据当前日期和小时查询数据
+     * @param now
+     * @param hour
+     * @return
+     */
+    List queryRequestCount(String now, int hour);
 }

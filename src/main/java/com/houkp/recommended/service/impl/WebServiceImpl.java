@@ -106,4 +106,9 @@ public class WebServiceImpl implements WebService {
         requestCountRepository.save(requestCountBeans);
         return null;
     }
+
+    @Override
+    public List queryRequestCount(String now, int hour) {
+        return requestCountRepository.findRequestCount(now,hour);
+    }
 }

@@ -3,6 +3,7 @@ package com.houkp.recommended.web;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.houkp.recommended.config.RequestLimit;
+import com.houkp.recommended.dto.RequestCountDTO;
 import com.houkp.recommended.entity.BidCountBean;
 import com.houkp.recommended.entity.RequestCountBean;
 import com.houkp.recommended.service.WebService;
@@ -16,8 +17,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -25,7 +26,7 @@ import java.util.*;
 
 
 @Api(value = "WebController", description = "监控平台")
-@Controller
+@RestController
 public class WebController {
 
     private static final Logger log = LoggerFactory.getLogger(WebController.class);
@@ -162,13 +163,24 @@ public class WebController {
         return null;
     }
 
-    @RequestLimit(count = 1, time = 120000)
-    @GetMapping(value = "/hello")
-    @ResponseBody
-    public String hello(@RequestHeader HttpServletRequest httpServletRequest) {
+//    @RequestLimit(count = 1, time = 120000)
+    @GetMapping("/hello")
+//    @ResponseBody
+    public ModelAndView hello() {
         System.out.println("11111111111111111111111111");
-        return "hello word";
+        return new ModelAndView("echatrts");
     }
+
+    /**
+     * 页面展示数据
+     * @return
+     */
+    @GetMapping("/echatrts")
+    public ModelAndView echatrts() {
+        return new ModelAndView("echatrtsTest");
+    }
+
+
 
     /**
      * 查询请求
@@ -180,6 +192,28 @@ public class WebController {
     public Page<RequestCountBean> orderList(Pageable pageable) {
         Page<RequestCountBean> requestCountBeanPage = webService.search(pageable);
         return requestCountBeanPage;
+    }
+
+    /**
+     * 查询请求数
+     * @param 
+     * @return
+     */
+    @GetMapping(value = "/queryRequestCount")
+    @ResponseBody
+    public String queryRequestCount() {
+        //当前日期
+        String now = LocalDate.now().toString();
+        //当前小时
+        int hour = LocalTime.now().getHour();
+        List requestCountBeanList = webService.queryRequestCount(now,hour);
+        for (Object o : requestCountBeanList) {
+            RequestCountDTO requestCountDTO = RequestCountDTO.convertRequestCount(JSON.toJSONString(o));
+            System.out.println(requestCountDTO);
+
+        }
+
+        return JSON.toJSONString(requestCountBeanList);
     }
 
 }
