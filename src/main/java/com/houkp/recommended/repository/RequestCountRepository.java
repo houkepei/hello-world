@@ -19,7 +19,15 @@ public interface RequestCountRepository extends JpaRepository<RequestCountBean,S
      * @param hour
      * @return
      */
-    @Query(nativeQuery = true,value = " SELECT host_address,adx_name,GROUP_CONCAT(request_count) AS   adx_count FROM request_count  WHERE  DAY= ?1  AND HOUR =?2   GROUP BY adx_name,host_address;")
-    List findRequestCount(String now, int hour);
-//    List findRequestCount();
+    @Query(nativeQuery = true,value = " SELECT host_address,adx_name,GROUP_CONCAT(request_count) AS   adx_count FROM request_count  WHERE  DAY= ?1  AND HOUR =?2  AND host_address=?3 GROUP BY adx_name,host_address;")
+    List findRequestCount(String now, int hour,String hostAddress);
+
+    /**
+     * 根据当前日期和小时查询数据
+     * @param now
+     * @param hour
+     * @return
+     */
+    @Query(nativeQuery = true,value = " SELECT host_address,adx_name,GROUP_CONCAT(bid_count) AS   adx_count FROM bid_count  WHERE  DAY= ?1  AND HOUR =?2  AND host_address=?3 GROUP BY adx_name,host_address;")
+    List findBidCount(String now, int hour, String hostAddress);
 }

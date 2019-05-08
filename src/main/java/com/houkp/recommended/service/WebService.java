@@ -62,10 +62,18 @@ public interface WebService {
     public String  saveRequestCountList(List<RequestCountBean> requestCountBeans);
 
     /**
-     * 根据当前日期和小时查询数据
+     * 根据当前日期和小时查询请求数据
      * @param now
      * @param hour
      * @return
      */
-    List queryRequestCount(String now, int hour);
+    List queryRequestCount(String now, int hour,String hostAddress);
+
+    /**
+     * 根据当前日期和小时查询赢价数据
+     * @param now
+     * @param hour
+     * @return
+     */
+    List queryBidCount(String now, int hour, String hostAddress);
 }

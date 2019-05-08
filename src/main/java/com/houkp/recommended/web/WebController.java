@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -203,7 +204,7 @@ public class WebController {
      */
     @GetMapping(value = "/queryRequestCount")
     @ResponseBody
-    public String queryRequestCount() {
+    public String queryRequestCount(@RequestParam String hostAddress) {
         //页面json数据
         Map echarts = new HashMap();
         //legend 标题
@@ -214,7 +215,7 @@ public class WebController {
         String now = LocalDate.now().toString();
         //当前小时
         int hour = LocalTime.now().getHour();
-        List requestCountBeanList = webService.queryRequestCount(now, hour);
+        List requestCountBeanList = webService.queryRequestCount(now, hour,hostAddress);
         for (Object o : requestCountBeanList) {
             RequestCountDTO requestCountDTO = RequestCountDTO.convertRequestCount(JSON.toJSONString(o));
             String adxName = requestCountDTO.getHostAddress() + requestCountDTO.getAdxName();
@@ -223,7 +224,45 @@ public class WebController {
             seriesMap.put("name", adxName);
             seriesMap.put("type", "line");
             seriesMap.put("stack", "总量");
-            seriesMap.put("data", requestCountDTO.getRequestCount());
+            seriesMap.put("data", requestCountDTO.getRequestCount().split(","));
+            series.add(seriesMap);
+        }
+        echarts.put("legend", adxNameList);
+        echarts.put("series", series);
+        System.out.println(JSON.toJSONString(echarts));
+        return JSON.toJSONString(echarts);
+    }
+
+
+    /**
+     * 查询赢价数
+     *
+     * @param
+     * @return
+     */
+    @GetMapping(value = "/queryBidCount")
+    @ResponseBody
+    public String queryBidCount(@RequestParam String hostAddress) {
+        //页面json数据
+        Map echarts = new HashMap();
+        //legend 标题
+        List adxNameList = new ArrayList();
+        //数据
+        List series = new ArrayList();
+        //当前日期
+        String now = LocalDate.now().toString();
+        //当前小时
+        int hour = LocalTime.now().getHour();
+        List bidCountBeanList = webService.queryBidCount(now, hour,hostAddress);
+        for (Object o : bidCountBeanList) {
+            RequestCountDTO requestCountDTO = RequestCountDTO.convertRequestCount(JSON.toJSONString(o));
+            String adxName = requestCountDTO.getHostAddress() + requestCountDTO.getAdxName();
+            adxNameList.add(adxName);
+            Map seriesMap = new HashMap();
+            seriesMap.put("name", adxName);
+            seriesMap.put("type", "line");
+            seriesMap.put("stack", "总量");
+            seriesMap.put("data", requestCountDTO.getRequestCount().split(","));
             series.add(seriesMap);
         }
         echarts.put("legend", adxNameList);
@@ -233,37 +272,7 @@ public class WebController {
     }
 
     public static void main(String[] args) {
-        Map echarts = new HashMap();
-        List adxNameList = new ArrayList();
-        adxNameList.add("快友");
-        adxNameList.add("快友");
-        adxNameList.add("快友");
-        adxNameList.add("快友");
-        adxNameList.add("快友");
-        adxNameList.add("快友");
-        echarts.put("legend", adxNameList);
 
-        String string = JSON.toJSONString(echarts);
-        List series = new ArrayList();
-        for (int i = 0; i < 10; i++) {
-            Map seriesMap = new HashMap();
-            seriesMap.put("name1", "邮件营销");
-            seriesMap.put("name2", "邮件营销");
-            seriesMap.put("name3", "邮件营销");
-            List data = new ArrayList();
-            data.add("222");
-            data.add("222");
-            data.add("222");
-            data.add("222");
-            data.add("222");
-            data.add("222");
-            seriesMap.put("data", data);
-            series.add(seriesMap);
-        }
-        echarts.put("series", series);
-
-        System.out.println(string);
-        System.out.println(JSON.toJSONString(echarts));
     }
 
 }

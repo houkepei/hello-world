@@ -108,7 +108,12 @@ public class WebServiceImpl implements WebService {
     }
 
     @Override
-    public List queryRequestCount(String now, int hour) {
-        return requestCountRepository.findRequestCount(now,hour);
+    public List queryRequestCount(String now, int hour,String hostAddress) {
+        return requestCountRepository.findRequestCount(now,hour,hostAddress);
+    }
+
+    @Override
+    public List queryBidCount(String now, int hour, String hostAddress) {
+        return requestCountRepository.findBidCount(now,hour,hostAddress);
     }
 }
