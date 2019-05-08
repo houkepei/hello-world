@@ -15,16 +15,28 @@
 <body>
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 <div id="main121" style="width: 100%;height:400px;"></div>
-<div id="main122" style="width: 100%;height:400px;"></div>
-<div id="main123" style="width: 100%;height:400px;"></div>
-<div id="main124" style="width: 100%;height:400px;"></div>
-<div id="main132" style="width: 100%;height:400px;"></div>
-
 <div id="bid121" style="width: 100%;height:400px;"></div>
+<div id="main122" style="width: 100%;height:400px;"></div>
 <div id="bid122" style="width: 100%;height:400px;"></div>
+<div id="main123" style="width: 100%;height:400px;"></div>
 <div id="bid123" style="width: 100%;height:400px;"></div>
+<div id="main124" style="width: 100%;height:400px;"></div>
 <div id="bid124" style="width: 100%;height:400px;"></div>
-<div id="bid132" style="width: 100%;height:400px;"></div>
+<!--深圳服务器-->
+<div id="szmain23" style="width: 100%;height:400px;"></div>
+<div id="szbid23" style="width: 100%;height:400px;"></div>
+<div id="szmain24" style="width: 100%;height:400px;"></div>
+<div id="szbid24" style="width: 100%;height:400px;"></div>
+<div id="szmain25" style="width: 100%;height:400px;"></div>
+<div id="szbid25" style="width: 100%;height:400px;"></div>
+
+
+
+
+
+
+
+
 
 <script type="text/javascript">
 
@@ -71,6 +83,32 @@
             }
         })
 
+        //深圳服务器
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryRequestCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.23"}, //要给后台传的参数
+            success: function (res) {
+                myChart23(JSON.parse(res))
+            }
+        })
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryRequestCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.24"}, //要给后台传的参数
+            success: function (res) {
+                myChart24(JSON.parse(res))
+            }
+        })
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryRequestCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.25"}, //要给后台传的参数
+            success: function (res) {
+                myChart25(JSON.parse(res))
+            }
+        })
+
     // 出手数据
 
         $.ajax({
@@ -111,6 +149,31 @@
             data:{hostAddress:"172.17.129.132"}, //要给后台传的参数
             success: function (res) {
                 mybid132(JSON.parse(res))
+            }
+        })
+        //深圳服务器
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryBidCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.23"}, //要给后台传的参数
+            success: function (res) {
+                mybid23(JSON.parse(res))
+            }
+        })
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryBidCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.24"}, //要给后台传的参数
+            success: function (res) {
+                mybid24(JSON.parse(res))
+            }
+        })
+        $.ajax({
+            url: 'http://172.17.129.131:8090/queryBidCount',
+            type: "GET",
+            data:{hostAddress:"172.18.16.25"}, //要给后台传的参数
+            success: function (res) {
+                mybid25(JSON.parse(res))
             }
         })
 
@@ -318,6 +381,129 @@
         myChart.setOption(option);
     }
 
+    //深圳服务器
+    function myChart25(params) {
+        var myChart = echarts.init(document.getElementById('szmain25'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控请求数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    function myChart23(params) {
+        var myChart = echarts.init(document.getElementById('szmain23'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控请求数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    function myChart24(params) {
+        var myChart = echarts.init(document.getElementById('szmain24'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控请求数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+
     //    出手数据
 
     function  mybid121(params) {
@@ -482,6 +668,128 @@
     }
     function  mybid132(params) {
         var myChart = echarts.init(document.getElementById('bid132'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控出手数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+//深圳服务器
+    function  mybid25(params) {
+        var myChart = echarts.init(document.getElementById('szbid25'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控出手数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    function  mybid23(params) {
+        var myChart = echarts.init(document.getElementById('szbid23'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各家adx每分钟监控出手数据',
+                // subtext: '纯属虚构'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: params.legend
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    mark: {show: true},
+                    dataView: {show: true, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            calculable: true,
+            xAxis: [
+                {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60]
+                }
+            ],
+            yAxis: {},
+            series: params.series
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    function  mybid24(params) {
+        var myChart = echarts.init(document.getElementById('szbid24'));
 
         // 指定图表的配置项和数据
         var option = {
