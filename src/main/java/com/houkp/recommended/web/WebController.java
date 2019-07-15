@@ -103,8 +103,6 @@ public class WebController {
                 bidCountBean.setAdxName("腾讯广点通");
             } else if (adxName.equals("5")) {
                 bidCountBean.setAdxName("百度");
-            } else {
-                continue;
             }
             bidCountBean.setHostAddress(bidCountBeansplit[0]);
             bidCountBean.setAdxId(bidCountBeansplit[1]);
@@ -147,8 +145,6 @@ public class WebController {
                 requestCountBean.setAdxName("腾讯广点通");
             } else if (adxName.equals("5")) {
                 requestCountBean.setAdxName("百度");
-            } else {
-                continue;
             }
             requestCountBean.setHostAddress(bidCountBeansplit[0]);
             requestCountBean.setAdxId(bidCountBeansplit[1]);
