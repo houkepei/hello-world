@@ -106,6 +106,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
+        <!--发送邮件-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.1</version>
+        </dependency>
 
 
     </dependencies>
@@ -126,8 +132,12 @@
             <id>elastic-lucene-snapshots</id>
             <name>Elastic Lucene Snapshots</name>
             <url>http://s3.amazonaws.com/download.elasticsearch.org/lucenesnapshots/00142c9</url>
-            <releases><enabled>true</enabled></releases>
-            <snapshots><enabled>false</enabled></snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 </project>
